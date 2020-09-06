@@ -11,6 +11,28 @@ class CHelper
 {
 public:
 	/////////////////////////////////////////////////////////////////////////////
+	// parsing command lines has some rules that user's may find difficult to
+	// follow, for example:
+	
+	//		SetDateTaken "c:\temp\camera roll\" 1980 9 6 
+	
+	// will fail because the double quote (") preceded by a backslash will
+	// generate a literal double quote. This will cause the rest of the
+	// arguments to be included in the second argument as a single string.
+	// The double quotes around the pathname are required because the path
+	// has white space (spaces or tabs) in it which would ordinarily break
+	// the string up into multiple arguments.
+	
+	// The correct way to enter these arguments is:
+	
+	//		SetDateTaken "c:\temp\camera roll\\" 1980 9 6 
+	
+	// where the double backslash will generate a single backslash to 
+	// prevent the generation of a literal double quote.
+
+	// This method addresses that specific scenario because in my mind
+	// the rules seem to be too obtuse and likely to be overlooked by
+	// the average user (I have made that mistake myself).
 	static vector<CString> CorrectedCommandLine( int argc, TCHAR* argv[] )
 	{
 		// create a vector of command line arguments, which is done
@@ -71,7 +93,8 @@ public:
 			}
 		}
 
-		// return the arguments as a vector of strings
+		// return the arguments as a vector of strings which may be the 
+		// original values or a corrected set of values.
 		return value;
 	}
 
