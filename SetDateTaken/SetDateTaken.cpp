@@ -282,7 +282,7 @@ void RecursePath( LPCTSTR path )
 		{
 			// do not recurse into the corrected folder
 			const CString str =
-				finder.GetFilePath().TrimRight( _T( "\\" ) );;
+				finder.GetFilePath().TrimRight( _T( "\\" ) );
 			if ( str.Right( nCorrected ) == csCorrected )
 			{
 				continue;
@@ -299,7 +299,7 @@ void RecursePath( LPCTSTR path )
 
 			} else // recurse into the new directory
 			{
-				RecursePath( str );
+				RecursePath( str + _T( "\\" ) );
 			}
 
 		} else // write the properties if it is a valid extension
